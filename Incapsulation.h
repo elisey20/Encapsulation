@@ -132,16 +132,87 @@ public:
     }
 };
 
-void print(A& a)
+inline void print(A& a)
 {
     a.print();
 }
 
 //замена поведения
+class someBehavior
+{
+private:
+    A* field;
 
+public:
+    explicit someBehavior(bool flag)
+    {
+        if (flag)
+            field = new A();
+        else
+            field = new B();
+    }
+
+    A getField()
+    {
+        return *field;
+    }
+};
 
 //расширение поведения
+class IClock
+        {
+protected:
+    int hour;
+    int minute;
+public:
+    virtual void time () = 0;
 
-//разобраться с расширением поведения
+    void setHour(int hour) {
+        IClock::hour = hour;
+    }
+
+    void setMinute(int minute) {
+        IClock::minute = minute;
+    }
+};
+
+class clock24 : public IClock {
+public:
+    virtual void time () {
+        if (minute < 10) {
+            std::cout << hour << ":0" << minute;
+        } else {
+            std::cout << hour << ":" << minute;
+        }
+    }
+};
+
+class clock12 : public IClock {
+private:
+    bool midday;
+    int day;
+
+public:
+    virtual void time () { // c. Расширения поведения
+        if (midday) {
+            if (minute < 10) {
+                std::cout << hour << ":0" << minute << " AM";
+            } else {
+                std::cout << hour << ":" << minute << " AM";
+            }
+        } else {
+            if (minute < 10) {
+                std::cout << hour << ":0" << minute << " PM";
+            } else {
+                std::cout << hour << ":" << minute << " PM";
+            }
+        }
+    }
+
+    void set_day(int day)
+    {
+        this->day = day;
+    }
+};
 
 #endif //UNTITLED_INCAPSULATION_H

@@ -41,5 +41,18 @@ int main()
     print(a);
     print(b);
 
+    //замена поведения
+    //можно ввести неопределённость путём ввода флага через консоль
+    someBehavior some(true);
+    some.getField().print();
+
+    //расширение поведения
+    clock24 clck1;
+    clck1.time();
+
+    clock12 clck2;
+    clck2.time();
+    clck2.set_day(2);
+
     return 0;
 }
